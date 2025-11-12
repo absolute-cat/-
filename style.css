@@ -1,0 +1,100 @@
+/* Загальні налаштування */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Сітка сторінки */
+.container {
+    display: grid;
+    grid-template-rows: 80px 1fr 60px 80px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+        "header header header"
+        "left main right"
+        "footer-top footer-top footer-top"
+        "footer footer footer";
+    height: 100vh;
+}
+
+/* Оформлення блоків */
+.header {
+    grid-area: header;
+    background-image: url('images/header-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 1px 1px 3px black;
+}
+
+.left {
+    grid-area: left;
+    background-color: #ffe4c4;
+    padding: 15px;
+}
+
+.main {
+    grid-area: main;
+    background-color: #fff;
+    padding: 15px;
+}
+
+.right {
+    grid-area: right;
+    background-color: #ffe4c4;
+    padding: 15px;
+}
+
+.footer-top {
+    grid-area: footer-top;
+    background-color: #dcedc8;
+    text-align: center;
+    padding: 10px;
+}
+
+.footer {
+    grid-area: footer;
+    background-color: #b0c4de;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Меню */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav li {
+    margin-bottom: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #0066cc;
+}
+
+/* Картинки напрямків */
+.destination-img {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+    vertical-align: middle;
+    border-radius: 5px;
+}
+
+/* Список напрямків */
+.destinations li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
