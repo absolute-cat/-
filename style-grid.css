@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+.container {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 80px 1fr 50px 70px;
+  grid-template-columns: 20% 1fr 20%;
+  grid-template-areas:
+    "header header header"
+    "left main right"
+    "footer-top footer-top footer-top"
+    "footer footer footer";
+}
+
+.header {
+  grid-area: header;
+    background-image: url('images/header-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 1px 1px 3px black;
+}
+
+.left {
+  grid-area: left;
+  background: #ffe4c4;
+  padding: 15px;
+}
+
+.main {
+  grid-area: main;
+  padding: 15px;
+}
+
+.right {
+  grid-area: right;
+  background: #ffe4c4;
+  padding: 15px;
+}
+
+.footer-top {
+  grid-area: footer-top;
+  background: #dcedc8;
+  text-align: center;
+  padding: 10px;
+}
+
+.footer {
+  grid-area: footer;
+  background: #b0c4de;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
