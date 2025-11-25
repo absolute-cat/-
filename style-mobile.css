@@ -1,0 +1,91 @@
+/* Загальні налаштування */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Контейнер */
+.container {
+    padding: 10px;
+}
+
+/* Заголовок */
+.header {
+    background-image: url('images/header-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    text-shadow: 1px 1px 3px black;
+}
+
+/* Меню */
+.menu {
+    background-color: #ffe4c4; /* як лівий/правий блок у ПК версії */
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding: 8px 0;
+}
+
+/* Лівий блок */
+.left {
+    background-color: #ffe4c4; /* той же колір що у ПК */
+    padding: 10px;
+    margin-top: 10px;
+}
+
+/* Основний контент */
+.main {
+    background-color: #fff; /* білий */
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.main ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.main li {
+    margin-bottom: 8px;
+}
+
+/* Картинки */
+.main img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+/* Футер */
+.footer-top {
+    background-color: #dcedc8; /* як у ПК версії */
+    text-align: center;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.footer {
+    background-color: #b0c4de; /* як у ПК версії */
+    text-align: center;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+/* Адаптивність для дуже маленьких екранів */
+@media (max-width: 400px) {
+    .menu a {
+        font-size: 14px;
+    }
+}
