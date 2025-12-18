@@ -10,6 +10,7 @@ body {
 }
 
 .header {
+  min-height: 300px;   /* або 40–50vh */
   grid-area: header;
     background-image: url('images/header-bg.jpg');
     background-size: cover;
@@ -20,6 +21,7 @@ body {
     color: white;
     text-shadow: 1px 1px 3px black;
 }
+
 
 .content {
   flex: 1;
@@ -60,3 +62,4 @@ nav a {
   text-decoration: none;
   font-weight: bold;
 }
+

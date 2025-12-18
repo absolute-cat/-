@@ -1,100 +1,207 @@
-/* Загальні налаштування */
-body {
+/* --- 1. Базові налаштування --- */
+* {
+    box-sizing: border-box;
     margin: 0;
-    font-family: Arial, sans-serif;
-}
-
-/* Сітка сторінки */
-.container {
-    display: grid;
-    grid-template-rows: 80px 1fr 60px 80px;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas:
-        "header header header"
-        "left main right"
-        "footer-top footer-top footer-top"
-        "footer footer footer";
-    height: 100vh;
-}
-
-/* Оформлення блоків */
-.header {
-    grid-area: header;
-    background-image: url('images/header-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-shadow: 1px 1px 3px black;
-}
-
-.left {
-    grid-area: left;
-    background-color: #ffe4c4;
-    padding: 15px;
-}
-
-.main {
-    grid-area: main;
-    background-color: #fff;
-    padding: 15px;
-}
-
-.right {
-    grid-area: right;
-    background-color: #ffe4c4;
-    padding: 15px;
-}
-
-.footer-top {
-    grid-area: footer-top;
-    background-color: #dcedc8;
-    text-align: center;
-    padding: 10px;
-}
-
-.footer {
-    grid-area: footer;
-    background-color: #b0c4de;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Меню */
-nav ul {
-    list-style-type: none;
     padding: 0;
 }
 
-nav li {
-    margin-bottom: 10px;
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f9f9f9;
 }
 
-nav a {
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-}
-
-nav a:hover {
-    color: #0066cc;
-}
-
-/* Картинки напрямків */
-.destination-img {
-    width: 100px;
-    height: auto;
-    margin-right: 10px;
-    vertical-align: middle;
-    border-radius: 5px;
-}
-
-/* Список напрямків */
-.destinations li {
-    margin-bottom: 15px;
+/* --- 2. Шапка (Header) --- */
+header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    padding: 20px 5%;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff6600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+/* --- 3. Меню та "Хак з чекбоксом" (Без JS) --- */
+
+/* 1. Ховаємо сам чекбокс (квадратик) */
+#menu-toggle {
+    display: none;
+}
+
+/* 2. Стилізуємо іконку (три палочки) - це label для чекбокса */
+.menu-icon {
+    display: none; /* На ПК ховаємо */
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+/* 3. Саме меню на ПК */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-menu li a:hover {
+    color: #ff6600;
+}
+
+/* --- 4. Герой (Hero) --- */
+.hero {
+    width: 100%;
+    height: 450px;
+    /* Заміни посилання на локальне зображення: url('images/hero-bg.jpg') */
+    background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop'); 
+    background-size: cover;
+    background-position: center;
+}
+
+/* --- 5. Контент --- */
+.content {
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.content h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.content p {
+    color: #666;
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+/* --- 6. Картки --- */
+.features-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; 
+    padding: 0 5%;
+    margin-bottom: 80px;
+    flex-wrap: wrap;
+}
+
+.card {
+    flex: 1;
+    min-width: 220px; 
+    border: 2px solid #ff6600; 
+    padding: 30px 15px;
+    text-align: center;
+    background: #fff;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none; /* Щоб посилання-картка не мала підкреслення */
+    display: block; /* Робить посилання блоковим елементом */
+}
+
+.card:hover {
+    background-color: #ff6600;
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 102, 0, 0.2);
+}
+
+/* Змінюємо колір всіх елементів всередині картки при наведенні */
+.card:hover h3, 
+.card:hover i,
+.card:hover p {
+    color: white;
+}
+
+.card-icon {
+    font-size: 40px;
+    color: #ff6600;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.card p {
+    font-size: 14px;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+footer {
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* --- 7. АДАПТИВНІСТЬ (Мобільна версія) --- */
+@media (max-width: 768px) {
+    
+    /* Показуємо іконку бургера */
+    .menu-icon {
+        display: block; 
+    }
+
+    /* Ховаємо меню за замовчуванням */
+    .nav-menu {
+        display: none; 
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        padding: 0;
+        text-align: center;
+        z-index: 10; /* Щоб меню було поверх контенту */
+    }
+
+    .nav-menu li {
+        width: 100%;
+    }
+
+    .nav-menu li a {
+        display: block;
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* --- МАГІЯ БЕЗ JS --- */
+    /* Якщо чекбокс натиснутий (:checked), то елемент .nav-menu, що йде після нього (~), стає видимим */
+    #menu-toggle:checked ~ .nav-menu {
+        display: flex;
+    }
+
+    /* Адаптація контенту */
+    .hero { height: 250px; }
+    .content h1 { font-size: 28px; }
+    .features-container { flex-direction: column; align-items: center; }
+    .card { width: 100%; max-width: 400px; }
 }

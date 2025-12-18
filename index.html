@@ -3,56 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мій сайт про подорожі</title>
+    <title>Подорожуй з нами - Lab 4</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
 
-        <div class="block header">
-            <h1>Подорожуй з нами!</h1>
-        </div>
+    <header>
+        <a href="index.html" class="logo">Подорожуй з нами</a>
 
-        <div class="block left">
-            <p>Ми організовуємо тури до найцікавіших куточків світу. Обирай напрямок і гайда в подорож!</p>
-            <p>Кожна мандрівка — це нові враження, знайомства і пригоди.</p>
-        </div>
+        <input type="checkbox" id="menu-toggle">
+        
+        <label for="menu-toggle" class="menu-icon">
+            <i class="fas fa-bars"></i>
+        </label>
+        
+        <ul class="nav-menu">
+            <li><a href="index.html">Головна</a></li>
+            <li><a href="page2.html">Європа</a></li>
+            <li><a href="page3.html">Азія</a></li>
+            <li><a href="page4.html">Америка</a></li>
+            <li><a href="page5.html">Контакти</a></li>
+        </ul>
+    </header>
 
-        <div class="block main">
-            <h2>Наші популярні напрямки</h2>
+    <section class="hero"></section>
+
+    <section class="content">
+        <h1>Відкрий світ разом з нами</h1>
+        <p>Ми організовуємо тури до найцікавіших куточків світу. Обирай свій напрямок!</p>
+
+        <div class="features-container">
             
-                <li>
-                    Париж — місто любові
-                </li>
-                <li> 
-                    Рим — серце Італії
-                </li>
-                <li>
-                    Прага — європейська перлина
-                </li>
-            </ul>
-        </div>
+            <a href="page2.html" class="card">
+                <div class="card-icon"><i class="fas fa-wine-glass-alt"></i></div>
+                <h3>Париж</h3>
+                <p>Європейська романтика.</p>
+            </a>
 
-        <div class="block right">
-            <nav>
-                <ul>
-                    <li><a href="index.html">Головна</a></li>
-                    <li><a href="page2.html">Європа</a></li>
-                    <li><a href="page3.html">Азія</a></li>
-                    <li><a href="page4.html">Америка</a></li>
-                    <li><a href="page5.html">Контакти</a></li>
-                </ul>
-            </nav>
-        </div>
+            <a href="page2.html" class="card">
+                <div class="card-icon"><i class="fas fa-pizza-slice"></i></div>
+                <h3>Рим</h3>
+                <p>Італійська історія.</p>
+            </a>
 
-        <div class="block footer-top">
-            <p>Акційні тури кожного тижня! Знижки до 20% на групові подорожі.</p>
-        </div>
+            <a href="page2.html" class="card">
+                <div class="card-icon"><i class="fas fa-landmark"></i></div>
+                <h3>Прага</h3>
+                <p>Старовинна архітектура.</p>
+            </a>
 
-        <div class="block footer">
-            <h2>До нових зустрічей у мандрах!</h2>
-        </div>
+            <a href="page4.html" class="card">
+                <div class="card-icon"><i class="fas fa-globe-americas"></i></div>
+                <h3>Америка</h3>
+                <p>Новий світ.</p>
+            </a>
 
-    </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Акційні тури кожного тижня! © 2024</p>
+    </footer>
+
 </body>
 </html>
