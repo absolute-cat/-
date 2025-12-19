@@ -165,15 +165,35 @@ function createLiElement(text) {
 }
 
 // в) Збереження в LocalStorage
-function saveList() {
+function createLiElement(text) {
     const list = document.getElementById('dynamic-list');
-    const items = [];
-    list.querySelectorAll('li').forEach(li => {
-        items.push(li.textContent);
-    });
+    const li = document.createElement('li');
+    li.textContent = text;
+
+    // --- МАГІЯ ТУТ: Фарбуємо прямо в JS ---
     
-    localStorage.setItem('savedList', JSON.stringify(items));
-    alert("Список збережено!");
+    // Рахуємо, скільки вже є пунктів, щоб визначити парний/непарний
+    const count = list.children.length + 1; 
+
+    // Базові відступи, щоб було гарно
+    li.style.padding = "10px";
+    li.style.marginBottom = "5px";
+    li.style.borderRadius = "5px";
+    li.style.fontWeight = "bold";
+    li.style.display = "block";
+
+    if (count % 2 !== 0) { 
+        // НЕПАРНІ (1, 3, 5...) -> Помаранчевий
+        li.style.backgroundColor = "#ff6600";
+        li.style.color = "white";
+    } else {
+        // ПАРНІ (2, 4, 6...) -> Білий
+        li.style.backgroundColor = "white";
+        li.style.color = "black";
+        li.style.border = "1px solid #ccc"; // Рамка для білого
+    }
+
+    list.appendChild(li);
 }
 
 // г) Відновлення списку при завантаженні (якщо він має бути на місці)
