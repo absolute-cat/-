@@ -204,4 +204,22 @@ footer {
     .content h1 { font-size: 28px; }
     .features-container { flex-direction: column; align-items: center; }
     .card { width: 100%; max-width: 400px; }
+    /* --- Додаток для Lab 5 --- */
+
+/* Стилі для "зебри" у списку (Завдання 5) */
+#dynamic-list li:nth-child(odd) {
+    background-color: #fff;
+    color: #000;
+    padding: 5px;
+}
+
+#dynamic-list li:nth-child(even) {
+    background-color: #000;
+    color: #fff;
+    padding: 5px;
+}
+
+#dynamic-list {
+    text-align: left;
+}
 }

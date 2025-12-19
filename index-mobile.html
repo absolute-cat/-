@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Подорожуй з нами (Mobile)</title>
+    <title>Подорожуй (Mobile Lab 5)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
 
     <header>
-        <a href="#" class="logo">Подорожуй</a>
+        <a href="#" class="logo" id="block-1">Подорожуй</a>
 
         <input type="checkbox" id="menu-toggle">
-        
-        <label for="menu-toggle" class="menu-icon">
-            <i class="fas fa-bars"></i>
-        </label>
+        <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
         
         <nav class="nav-menu">
             <ul>
@@ -32,18 +29,36 @@
     <section class="hero"></section>
 
     <section class="content">
-        <h1>Відкрий світ</h1>
-        <p>Тури до найцікавіших куточків світу. Обирай свій напрямок!</p>
+        
+        <div id="block-3">
+            <h1>Відкрий світ</h1>
+            <p>Тури до найцікавіших куточків світу.</p>
+            
+            <div id="rhombus-result" style="color: #ff6600; font-weight: bold; margin-bottom: 15px;"></div>
+
+            <div id="triangle-form-container" style="background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd;">
+                <h3>Трикутник</h3>
+                <input type="number" id="side-a" placeholder="A" style="width: 30%; padding: 5px; margin-bottom: 5px;">
+                <input type="number" id="side-b" placeholder="B" style="width: 30%; padding: 5px; margin-bottom: 5px;">
+                <input type="number" id="side-c" placeholder="C" style="width: 30%; padding: 5px; margin-bottom: 5px;">
+                <button onclick="checkTriangle()" style="background: #ff6600; color: white; border: none; padding: 5px 10px; border-radius: 4px;">ОК</button>
+            </div>
+        </div>
 
         <div class="features-container">
             
-            <a href="page2.html" class="card">
+            <div class="card" id="block-2">
                 <div class="card-icon"><i class="fas fa-wine-glass-alt"></i></div>
                 <div class="card-text">
                     <h3>Париж</h3>
                     <p>Романтика та краса.</p>
+                    
+                    <label style="font-size: 12px; margin-top: 5px; display: block;">
+                        <input type="radio" name="italic-control" id="italic-radio"> Курсив
+                    </label>
                 </div>
-                <i class="fas fa-chevron-right arrow"></i> </a>
+                <i class="fas fa-chevron-right arrow"></i>
+            </div>
 
             <a href="page2.html" class="card">
                 <div class="card-icon"><i class="fas fa-pizza-slice"></i></div>
@@ -54,16 +69,7 @@
                 <i class="fas fa-chevron-right arrow"></i>
             </a>
 
-            <a href="page2.html" class="card">
-                <div class="card-icon"><i class="fas fa-landmark"></i></div>
-                <div class="card-text">
-                    <h3>Прага</h3>
-                    <p>Перлина Європи.</p>
-                </div>
-                <i class="fas fa-chevron-right arrow"></i>
-            </a>
-
-            <a href="page4.html" class="card">
+            <a href="page4.html" class="card" id="block-4">
                 <div class="card-icon"><i class="fas fa-globe-americas"></i></div>
                 <div class="card-text">
                     <h3>Америка</h3>
@@ -76,8 +82,24 @@
     </section>
 
     <footer>
-        <p>© 2024 Подорожуй з нами</p>
+        <div id="block-5" style="margin-bottom: 20px; border-bottom: 1px solid #555; padding-bottom: 10px;">
+            <p onclick="showListForm()" style="text-decoration: underline; cursor: pointer;">+ Створити список</p>
+            
+            <div id="list-container" style="display: none; margin-top: 10px;">
+                <input type="text" id="list-item-input" placeholder="Текст пункту" style="width: 70%; padding: 5px;">
+                <button onclick="addListItem()" style="width: 25%; padding: 5px;">+</button>
+                <button onclick="saveList()" style="width: 100%; margin-top: 5px; padding: 5px; background: green; color: white; border: none;">Зберегти</button>
+                
+                <ol id="dynamic-list" style="text-align: left; margin-top: 10px; background: white; color: black; padding: 10px;"></ol>
+            </div>
+        </div>
+
+        <div id="block-6">
+            <p>© 2024 Подорожуй з нами</p>
+        </div>
     </footer>
+
+    <script src="script.js"></script>
 
 </body>
 </html>

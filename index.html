@@ -3,21 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Подорожуй з нами - Lab 4</title>
+    <title>Подорожуй з нами - Lab 5</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="logo">Подорожуй з нами</a>
+        <a href="index.html" class="logo" id="block-1">Подорожуй з нами</a>
 
         <input type="checkbox" id="menu-toggle">
-        
-        <label for="menu-toggle" class="menu-icon">
-            <i class="fas fa-bars"></i>
-        </label>
-        
+        <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
         <ul class="nav-menu">
             <li><a href="index.html">Головна</a></li>
             <li><a href="page2.html">Європа</a></li>
@@ -30,41 +26,69 @@
     <section class="hero"></section>
 
     <section class="content">
-        <h1>Відкрий світ разом з нами</h1>
-        <p>Ми організовуємо тури до найцікавіших куточків світу. Обирай свій напрямок!</p>
+        <div id="block-3">
+            <h1>Відкрий світ разом з нами</h1>
+            <p>Ми організовуємо тури до найцікавіших куточків світу.</p>
+            
+            <div id="rhombus-result" style="margin: 10px; font-weight: bold; color: green;"></div>
+            
+            <div id="triangle-form-container">
+                <h3>Перевірка трикутника</h3>
+                <input type="number" id="side-a" placeholder="Сторона A" style="padding: 5px;">
+                <input type="number" id="side-b" placeholder="Сторона B" style="padding: 5px;">
+                <input type="number" id="side-c" placeholder="Сторона C" style="padding: 5px;">
+                <button onclick="checkTriangle()" style="padding: 5px; cursor: pointer;">Перевірити</button>
+            </div>
+        </div>
 
         <div class="features-container">
-            
-            <a href="page2.html" class="card">
+            <div class="card" id="block-2">
                 <div class="card-icon"><i class="fas fa-wine-glass-alt"></i></div>
                 <h3>Париж</h3>
                 <p>Європейська романтика.</p>
-            </a>
+                <label style="font-size: 12px; display: block; margin-top: 10px;">
+                    <input type="radio" name="italic-control" id="italic-radio"> Увімкнути курсив
+                </label>
+            </div>
 
-            <a href="page2.html" class="card">
+            <div class="card">
                 <div class="card-icon"><i class="fas fa-pizza-slice"></i></div>
                 <h3>Рим</h3>
                 <p>Італійська історія.</p>
-            </a>
+            </div>
 
-            <a href="page2.html" class="card">
+            <div class="card">
                 <div class="card-icon"><i class="fas fa-landmark"></i></div>
                 <h3>Прага</h3>
                 <p>Старовинна архітектура.</p>
-            </a>
+            </div>
 
-            <a href="page4.html" class="card">
+            <div class="card" id="block-4">
                 <div class="card-icon"><i class="fas fa-globe-americas"></i></div>
                 <h3>Америка</h3>
-                <p>Новий світ.</p>
-            </a>
-
+                <p>Нові горизонти.</p>
+            </div>
         </div>
     </section>
 
-    <footer>
-        <p>Акційні тури кожного тижня! © 2024</p>
+    <footer style="display: flex; justify-content: space-between; padding: 20px;">
+        <div id="block-5" style="text-align: left; width: 45%;">
+            <a href="#" onclick="showListForm(); return false;" style="color: white; text-decoration: underline;">Створити список (Завдання 5)</a>
+            
+            <div id="list-container" style="display: none; margin-top: 10px; background: #333; padding: 10px;">
+                <input type="text" id="list-item-input" placeholder="Пункт списку">
+                <button onclick="addListItem()">Додати</button>
+                <button onclick="saveList()">Зберегти в пам'ять</button>
+                <ol id="dynamic-list" style="margin-top: 10px; padding-left: 20px;"></ol>
+            </div>
+        </div>
+
+        <div id="block-6" style="width: 45%; text-align: right;">
+            Акційні тури кожного тижня! © 2024
+        </div>
     </footer>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
