@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 1 - Створення Табів</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+    <a href="index.html" class="logo">Lab 6 (Admin)</a>
+    <ul class="nav-menu">
+        <li><a href="admin.html" class="active">Адмінка</a></li>
+        <li><a href="client.html">Клієнт</a></li>
+    </ul>
+</header>
+
+    <section class="content">
+        
+        <div id="block-3" style="width: 100%; max-width: 800px; margin: 0 auto;">
+            <div class="admin-panel" style="background: #fff; padding: 20px; border-radius: 8px; color: #000; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h2 style="color: #333;">Конструктор вкладок</h2>
+                <p style="color: #666;">Додайте вкладки, які з'являться на Page 2.</p>
+                <hr style="margin: 10px 0;">
+
+                <input type="text" id="tab-title" placeholder="Назва вкладки (напр. Париж)" 
+                       style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                
+                <textarea id="tab-content" rows="4" placeholder="Текст опису..." 
+                          style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+                
+                <button onclick="addTabLocal()" 
+                        style="background: #333; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px;">
+                    + Додати в список
+                </button>
+
+                <h4 style="margin-top: 20px; color: #333;">Чернетка (ще не збережено):</h4>
+                <ul id="preview-list" style="text-align: left; margin-bottom: 20px; color: #333;"></ul>
+
+                <button onclick="saveTabsToServer()" 
+                        style="width: 100%; background: #ff6600; color: white; padding: 15px; border: none; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 4px;">
+                    ЗБЕРЕГТИ НА СЕРВЕР
+                </button>
+                <p id="status-msg" style="text-align: center; margin-top: 10px; font-weight: bold;"></p>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        let tabsArray = []; // Масив для зберігання даних
+
+        // 1. Додавання в локальний список
+        function addTabLocal() {
+            const title = document.getElementById('tab-title').value;
+            const content = document.getElementById('tab-content').value;
+
+            if(!title || !content) {
+                alert("Заповніть назву і текст!");
+                return;
+            }
+
+            tabsArray.push({ title: title, content: content });
+            renderPreview(); // Оновити список на екрані
+            
+            // Очистити поля
+            document.getElementById('tab-title').value = '';
+            document.getElementById('tab-content').value = '';
+        }
+
+        // 2. Відображення списку чернетки
+        function renderPreview() {
+            const list = document.getElementById('preview-list');
+            list.innerHTML = '';
+            tabsArray.forEach((tab, index) => {
+                list.innerHTML += `<li><b>${tab.title}</b> — ${tab.content.substring(0, 30)}...</li>`;
+            });
+        }
+
+        // 3. Відправка на сервер (PHP)
+        function saveTabsToServer() {
+            if(tabsArray.length === 0) {
+                alert("Список порожній!");
+                return;
+            }
+
+            fetch('save_tabs.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(tabsArray)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const msg = document.getElementById('status-msg');
+                msg.innerText = "Успішно збережено!";
+                msg.style.color = "green";
+                // Очищаємо масив після збереження (опціонально)
+                // tabsArray = []; renderPreview();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('status-msg').innerText = "Помилка з'єднання з сервером";
+            });
+        }
+    </script>
+
+</body>
+</html>

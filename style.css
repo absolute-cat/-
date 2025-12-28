@@ -222,4 +222,60 @@ footer {
 #dynamic-list {
     text-align: left;
 }
+/* --- СТИЛІ ДЛЯ ВАРІАНТУ 4 (ТАБИ) --- */
+
+/* Контейнер вкладок */
+.custom-tabs {
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+    color: black; /* Щоб текст був читабельний */
+}
+
+/* Кнопки навігації */
+.tabs-nav {
+    display: flex;
+    gap: 5px;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 5px 5px 0 0;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.tab-button:hover {
+    background: #e0e0e0;
+}
+
+/* Активна кнопка */
+.tab-button.active {
+    background: #ff6600; /* Твій помаранчевий колір */
+    color: white;
+}
+
+/* Вміст вкладок */
+.tab-pane {
+    display: none; /* Ховаємо всі за замовчуванням */
+    padding: 15px;
+    animation: fadeEffect 0.5s;
+}
+
+/* Активний вміст */
+.tab-pane.active {
+    display: block; /* Показуємо тільки активний */
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
 }

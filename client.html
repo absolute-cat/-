@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 2 - Перегляд Табів</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+    <a href="index.html" class="logo">Lab 6 (Client)</a>
+    <ul class="nav-menu">
+        <li><a href="admin.html">Адмінка</a></li>
+        <li><a href="client.html" class="active">Клієнт</a></li>
+    </ul>
+</header>
+    <section class="content">
+        
+        <div id="block-3" style="width: 100%; max-width: 800px; margin: 0 auto;">
+            <div style="background: rgba(255,255,255,0.9); padding: 20px; border-radius: 8px;">
+                <h2 style="color: #333;">Актуальні тури (Live)</h2>
+                <p style="color: #555; font-size: 0.9em;">Дані оновлюються автоматично кожні 3 сек...</p>
+                
+                <div id="tabs-root">
+                    <p style="color: black;">Завантаження даних...</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        // 1. Функція генерації HTML (Без Bootstrap)
+        function buildTabsHTML(tabsData) {
+            if (!tabsData || tabsData.length === 0) return '<p style="color:black">Вкладок поки немає.</p>';
+
+            let buttonsHTML = '<div class="custom-tabs-nav">';
+            let contentHTML = '';
+
+            tabsData.forEach((tab, index) => {
+                // Перша вкладка активна
+                const isActive = (index === 0) ? 'active' : ''; 
+                
+                // Кнопки
+                buttonsHTML += `<button class="tab-btn ${isActive}" onclick="openTab(event, 'tab-${index}')">${tab.title}</button>`;
+                
+                // Контент
+                contentHTML += `<div id="tab-${index}" class="tab-content ${isActive}">
+                                    <h3 style="color: #ff6600;">${tab.title}</h3>
+                                    <p style="color: #000;">${tab.content}</p>
+                                </div>`;
+            });
+
+            buttonsHTML += '</div>';
+            return `<div class="tabs-wrapper">${buttonsHTML}${contentHTML}</div>`;
+        }
+
+        // 2. Логіка перемикання (Клік)
+        window.openTab = function(evt, tabId) {
+            // Сховати всі
+            const contents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].className = contents[i].className.replace(" active", "");
+            }
+            // Деактивувати кнопки
+            const buttons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].className = buttons[i].className.replace(" active", "");
+            }
+            // Показати вибране
+            document.getElementById(tabId).className += " active";
+            evt.currentTarget.className += " active";
+        }
+
+        // 3. Завантаження з сервера
+        let lastDataJSON = '';
+
+        function loadTabs() {
+            fetch('get_tabs.php')
+            .then(response => response.json())
+            .then(data => {
+                // Перевіряємо, чи змінилися дані, щоб не "мигало"
+                const currentJSON = JSON.stringify(data);
+                if (currentJSON !== lastDataJSON) {
+                    document.getElementById('tabs-root').innerHTML = buildTabsHTML(data);
+                    lastDataJSON = currentJSON;
+                }
+            })
+            .catch(error => console.error('Помилка:', error));
+        }
+
+        // Запуск
+        loadTabs();
+        // Автоматичне оновлення (Завдання 2.e)
+        setInterval(loadTabs, 3000); 
+
+    </script>
+
+</body>
+</html>
