@@ -1,0 +1,171 @@
+/* --- style_lab7.css --- */
+
+/* 1. ЗАГАЛЬНІ НАЛАШТУВАННЯ */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/* 2. СІТКА (GRID) ДЛЯ ВАРІАНТУ 4 */
+.grid-container {
+    display: grid;
+    height: 100vh; /* На всю висоту екрану */
+    
+    /* 3 колонки: 
+       - 200px (ліва колонка)
+       - auto (центр розтягується)
+       - 250px (права колонка, ширша для кнопок) 
+    */
+    grid-template-columns: 200px auto 250px; 
+    
+    /* 4 ряди: 
+       - 60px (Шапка)
+       - auto (Основна висота)
+       - 50px (Підвал центрального блоку)
+       - 40px (Футер сторінки)
+    */
+    grid-template-rows: 60px auto 50px 40px;
+    
+    /* СХЕМА ОБЛАСТЕЙ (Згідно з макетом Варіант 4) */
+    grid-template-areas:
+        "b1 b1 b1"  /* Шапка на всю ширину */
+        "b2 b3 b4"  /* Ліво - Центр - Право */
+        "b5 b5 b4"  /* Блок 5 під 2 і 3, а 4 (право) високий */
+        "b6 b6 b6"; /* Футер на всю ширину */
+    
+    gap: 2px; /* Маленькі відступи між блоками */
+    background-color: #333; /* Колір ліній між блоками */
+}
+
+/* 3. ОФОРМЛЕННЯ БЛОКІВ */
+.block {
+    padding: 10px;
+    position: relative;
+    overflow: hidden; /* Щоб контент не вилазив */
+}
+
+.block-1 { grid-area: b1; background: #dae8fc; display: flex; align-items: center; font-weight: bold; }
+.block-2 { grid-area: b2; background: #ffe6cc; }
+.block-3 { grid-area: b3; background: #ffffff; border: 1px solid #ddd; } /* Тут анімація */
+.block-4 { grid-area: b4; background: #ffe6cc; display: flex; flex-direction: column; }
+.block-5 { grid-area: b5; background: #e1d5e7; } /* Зеленуватий/Сірий на схемі */
+.block-6 { grid-area: b6; background: #dae8fc; display: flex; align-items: center; justify-content: center; }
+
+/* 4. СТИЛІ ДЛЯ АНІМАЦІЇ (ВСЕРЕДИНІ БЛОКУ 3) */
+
+/* Контейнер робочої області (прихований спочатку) */
+#work-area {
+    display: none; 
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    background: #fff;
+}
+
+/* Панель керування (Controls) всередині анімації */
+#controls {
+    height: 40px;
+    background: #f0f0f0;
+    border-bottom: 2px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+#msg-box {
+    font-size: 12px;
+    font-family: monospace;
+    color: #333;
+}
+
+/* Поле, де літають квадрати */
+#anim-area {
+    /* Розміри згідно завдання: трохи менше батьківського */
+    width: calc(100% - 20px); 
+    height: calc(100% - 60px);
+    margin: 10px auto; 
+    
+    /* ВИМОГА: Оранжева рамка 5px */
+    border: 5px solid orange; 
+    position: relative;
+    
+    /* ВИМОГА: Текстура 32x32 (імітація точок) */
+    background-color: #ffffff;
+    background-image: radial-gradient(#aaa 2px, transparent 2px);
+    background-size: 32px 32px;
+}
+
+/* Квадрати */
+.square {
+    position: absolute;
+    display: none; /* Приховані до старту */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+#red-sq {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border: 1px solid darkred;
+}
+
+#green-sq {
+    width: 20px;
+    height: 20px;
+    background-color: green;
+    border: 1px solid darkgreen;
+}
+
+/* Кнопки */
+button {
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #999;
+    background: #eee;
+    font-size: 12px;
+}
+button:hover { background: #ddd; }
+
+/* 5. СТИЛІ ДЛЯ БЛОКУ 4 (ПРАВА КОЛОНКА) */
+.play-btn {
+    width: 100%;
+    padding: 15px;
+    background: #28a745; /* Зелений */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.play-btn:hover { background: #218838; }
+
+/* Таблиця результатів */
+#tables-container {
+    flex-grow: 1;
+    overflow-y: auto; /* Прокрутка, якщо багато логів */
+    background: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+.results-table {
+    width: 100%;
+    font-size: 11px;
+    border-collapse: collapse;
+}
+
+.results-table th, .results-table td {
+    border: 1px solid #ccc;
+    padding: 3px;
+    text-align: left;
+}
+.results-table th { background: #f9f9f9; }

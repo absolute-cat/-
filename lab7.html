@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 7 - Variant 4</title>
+    <link rel="stylesheet" href="style_lab7.css">
+</head>
+<body>
+    <div class="grid-container">
+        
+        <div class="block block-1">
+            <h3>Варіант 4 (Header)</h3>
+            <a href="index.html">На головну</a>
+        </div>
+
+        <div class="block block-2">
+            2<br>Ліва панель
+        </div>
+
+        <div class="block block-3" id="block-3">
+            <div id="default-content">
+                <h2>Блок 3</h2>
+                <p>Анімація з'явиться тут.</p>
+            </div>
+
+            <div id="work-area">
+                <div id="controls">
+                    <span id="msg-box">Ready...</span>
+                    <div>
+                        <button id="btn-start" onclick="startAnim()">Start</button>
+                        <button id="btn-stop" onclick="stopAnim()" style="display:none;">Stop</button>
+                        <button id="btn-reload" onclick="reloadAnim()" style="display:none;">Reload</button>
+                    </div>
+                    <button onclick="closeWork()">X</button>
+                </div>
+                <div id="anim-area">
+                    <div id="red-sq" class="square"></div>
+                    <div id="green-sq" class="square"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="block block-4" id="block-4">
+            <strong>4 (Controls)</strong>
+            <br><br>
+            <button onclick="openWork()" style="width: 100%; padding: 10px; background: green; color: white; cursor: pointer;">PLAY</button>
+            
+            <div id="tables-container"></div>
+        </div>
+
+        <div class="block block-5">
+            5<br>Додаткова інфа
+        </div>
+
+        <div class="block block-6">
+            6 (Footer)
+        </div>
+
+    </div>
+
+<script>
+    /* --- ЗМІННІ --- */
+    let animInterval = null;
+    let eventCounter = 0;
+    
+    // Об'єкти
+    let red = { el: document.getElementById('red-sq'), x: 0, y: 0, dx: 2, dy: 0, size: 10, color: 'Red' };
+    let green = { el: document.getElementById('green-sq'), x: 0, y: 0, dx: 0, dy: 3, size: 20, color: 'Green' };
+    let area = document.getElementById('anim-area');
+    let msgBox = document.getElementById('msg-box');
+
+    // Кнопки
+    let btnStart = document.getElementById('btn-start');
+    let btnStop = document.getElementById('btn-stop');
+    let btnReload = document.getElementById('btn-reload');
+
+    /* --- КЕРУВАННЯ --- */
+    function openWork() {
+        fetch('server.php?action=clear'); 
+        localStorage.removeItem('animEvents'); 
+        eventCounter = 0;
+
+        document.getElementById('default-content').style.display = 'none';
+        document.getElementById('work-area').style.display = 'flex';
+        resetPositions();
+        logEvent("Подія: Work field opened");
+    }
+
+    function closeWork() {
+        stopAnim();
+        document.getElementById('work-area').style.display = 'none';
+        document.getElementById('default-content').style.display = 'block';
+
+        // ВІДПРАВКА НАКОПИЧЕНОГО (Спосіб 2)
+        sendLocalStorageBatch();
+
+        // Відображення таблиці (з затримкою для запису)
+        setTimeout(renderResults, 1000);
+    }
+
+    function startAnim() {
+        btnStart.style.display = 'none'; btnStop.style.display = 'inline-block'; btnReload.style.display = 'none';
+        red.el.style.display = 'block'; green.el.style.display = 'block';
+        logEvent("Подія: Start pressed");
+        
+        // Інтервал 50мс (досить часто, щоб бачити різницю в часі)
+        if (!animInterval) animInterval = setInterval(step, 50); 
+    }
+
+    function stopAnim() {
+        clearInterval(animInterval); animInterval = null;
+        btnStop.style.display = 'none'; btnStart.style.display = 'inline-block';
+        logEvent("Подія: Stop pressed");
+    }
+
+    function reloadAnim() {
+        resetPositions();
+        btnReload.style.display = 'none'; btnStart.style.display = 'inline-block';
+        logEvent("Подія: Reload pressed");
+    }
+
+    /* --- ФІЗИКА --- */
+    function step() {
+        let W = area.clientWidth; let H = area.clientHeight;
+        
+        red.x += red.dx;
+        green.y += green.dy;
+
+        checkWall(red, W, H);
+        checkWall(green, W, H);
+
+        updateView();
+
+        // ВИМОГА: Логувати кожен крок/зміщення
+        // Це створить подію і для AJAX, і для LocalStorage
+        logEvent(`Step: R[${red.x},${red.y}] G[${green.x},${green.y}]`);
+
+        if (isInside(red, green)) { gameOver(); }
+    }
+
+    function checkWall(obj, W, H) {
+        let hit = false;
+        if (obj.x + obj.size >= W || obj.x <= 0) { obj.dx = -obj.dx; hit=true; }
+        if (obj.y + obj.size >= H || obj.y <= 0) { obj.dy = -obj.dy; hit=true; }
+        if(hit) logEvent(`Стінка: ${obj.color} відбився`);
+    }
+
+    function isInside(s, b) { return s.x >= b.x && s.x+s.size <= b.x+b.size && s.y >= b.y && s.y+s.size <= b.y+b.size; }
+
+    function gameOver() {
+        clearInterval(animInterval); animInterval = null;
+        logEvent("Подія: GAME OVER (Накладання)");
+        alert("Анімація завершена!");
+        btnStop.style.display = 'none'; btnStart.style.display = 'none'; btnReload.style.display = 'inline-block';
+    }
+
+    function resetPositions() {
+        let W = area.clientWidth; let H = area.clientHeight;
+        red.x = 0; red.y = (H/2)-5; red.dx = 5; red.dy = 0;
+        green.x = (W/2)-10; green.y = 0; green.dx = 0; green.dy = 7;
+        updateView();
+        red.el.style.display = 'none'; green.el.style.display = 'none';
+    }
+
+    function updateView() {
+        red.el.style.left = red.x + 'px'; red.el.style.top = red.y + 'px';
+        green.el.style.left = green.x + 'px'; green.el.style.top = green.y + 'px';
+    }
+
+    /* --- ГОЛОВНА ЛОГІКА ЗБЕРЕЖЕННЯ (Пункти b, c) --- */
+    function logEvent(text) {
+        eventCounter++;
+        msgBox.innerText = text;
+        
+        // Локальний час клієнта
+        let now = new Date();
+        let clientTime = now.toLocaleTimeString() + "." + now.getMilliseconds();
+
+        let record = { id: eventCounter, msg: text, clientTime: clientTime };
+
+        // 1. СПОСІБ 1: Негайне відправлення (AJAX)
+        fetch('server.php', {
+            method: 'POST',
+            body: JSON.stringify(record) // Відправляємо один об'єкт
+        }).catch(err => console.error("Server Error:", err));
+
+        // 2. СПОСІБ 2: Акумуляція в LocalStorage (одночасно з відправкою)
+        let ls = JSON.parse(localStorage.getItem('animEvents') || '[]');
+        ls.push(record);
+        localStorage.setItem('animEvents', JSON.stringify(ls));
+    }
+
+    function sendLocalStorageBatch() {
+        let ls = JSON.parse(localStorage.getItem('animEvents') || '[]');
+        if (ls.length > 0) {
+            // Відправляємо масив об'єктів (batch)
+            fetch('server.php', {
+                method: 'POST',
+                body: JSON.stringify({ batch: ls })
+            });
+        }
+    }
+
+    /* --- ВІДОБРАЖЕННЯ (Для звіту d) --- */
+  function renderResults() {
+        console.log("Починаю завантаження таблиці...");
+        
+        fetch('server.php')
+        .then(response => response.text()) // Спочатку читаємо як текст, щоб побачити помилку
+        .then(text => {
+            console.log("Відповідь сервера (Raw):", text); // Дивись сюди в консоль!
+
+            try {
+                let data = JSON.parse(text); // Пробуємо перетворити в об'єкт
+                
+                // Якщо прийшов порожній масив
+                if (data.length === 0) {
+                    document.getElementById('tables-container').innerHTML = "<p>Логи порожні.</p>";
+                    return;
+                }
+
+                data.sort((a,b) => a.id - b.id);
+
+                let html = `<table class="results-table">
+                    <thead>
+                        <tr>
+                            <th style="width:30px">ID</th>
+                            <th>Подія</th>
+                            <th>Клієнтський час</th>
+                            <th>Серверний час</th>
+                            <th>Спосіб</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                
+                data.forEach(row => {
+                    let method = row.methodType || 'Невідомо'; 
+                    let color = method.includes('AJAX') ? '#e6ffe6' : '#fff0e6';
+                    html += `<tr style="background:${color}">
+                                <td>${row.id}</td>
+                                <td>${row.msg}</td>
+                                <td>${row.clientTime}</td>
+                                <td>${row.serverTimeSave}</td>
+                                <td>${method}</td>
+                            </tr>`;
+                });
+                html += `</tbody></table>`;
+                document.getElementById('tables-container').innerHTML = html;
+
+            } catch (e) {
+                console.error("Помилка JSON:", e);
+                document.getElementById('tables-container').innerHTML = 
+                    `<p style="color:red; font-weight:bold;">Помилка обробки даних!</p>
+                     <p>Сервер повернув не JSON. Ось що прийшло:</p>
+                     <pre style="background:#eee; padding:5px; border:1px solid red;">${text}</pre>`;
+            }
+        })
+        .catch(err => {
+            console.error("Помилка мережі:", err);
+            document.getElementById('tables-container').innerHTML = "Помилка з'єднання з server.php";
+        });
+    }
+</script>
+</body>
+</html>
